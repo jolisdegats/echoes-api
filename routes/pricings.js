@@ -26,16 +26,19 @@ router.post(
     // Learn what this route does here: https://docs.forestadmin.com/documentation/v/v6/reference-guide/routes/default-routes#create-a-record
     // next();
     const recordCreator = new RecordCreator(pricings);
-    recordCreator
-      .deserialize(request.body)
-      .then((recordToCreate) => {
-        // Inserer les fonctions ici
-
-        return recordCreator.create(recordToCreate);
-      })
-      .then((record) => recordCreator.serialize(record))
-      .then((recordSerialized) => response.send(recordSerialized))
-      .catch(next);
+    recordCreator.deserialize(request.body).then((recordToCreate) =>
+      recordToCreate.amount <= 0 || !recordToCreate.amount
+        ? response
+            .status(400)
+            .send("Vous ne pouvez pas entrer un montant nul ou inférieur à 0")
+        : !recordToCreate.nbMotsInf || !recordToCreate.nbMotsSup
+        ? response.status(400).send("Valeur(s) d'intervalle manquante(s)")
+        : recordCreator
+            .create(recordToCreate, request.params.recordId)
+            .then((record) => recordCreator.serialize(record))
+            .then((recordSerialized) => response.send(recordSerialized))
+            .catch(next)
+    );
   }
 );
 
@@ -45,19 +48,20 @@ router.put(
   permissionMiddlewareCreator.update(),
   (request, response, next) => {
     const recordUpdater = new RecordUpdater(pricings);
-    recordUpdater
-      .deserialize(request.body)
-      .then((recordToUpdate) =>
-        recordToUpdate > 0
-          ? recordUpdater.update(recordToUpdate, request.params.recordId)
-          : res.status(400).send({
-              error: "Vous ne pouvez pas entrer une valeur inférieure à 0",
-            })
-      )
-      .then((record) => recordUpdater.serialize(record))
-      .then((recordSerialized) => response.send(recordSerialized));
-    // Learn what this route does here: https://docs.forestadmin.com/documentation/v/v6/reference-guide/routes/default-routes#update-a-record
-    next();
+    recordUpdater.deserialize(request.body).then((recordToUpdate) =>
+      recordToUpdate.amount <= 0 || recordToUpdate.amount === null
+        ? response
+            .status(400)
+            .send("Vous ne pouvez pas entrer un montant nul ou inférieur à 0")
+        : recordToUpdate.nbMotsInf === null || recordToUpdate.nbMotsSup === null
+        ? response.status(400).send("Valeur(s) d'intervalle manquante(s)")
+        : recordUpdater
+            .update(recordToUpdate, request.params.recordId)
+            .then((record) => recordUpdater.serialize(record))
+            .then((recordSerialized) => response.send(recordSerialized))
+            // Learn what this route does here: https://docs.forestadmin.com/documentation/v/v6/reference-guide/routes/default-routes#update-a-record
+            .catch(next)
+    );
   }
 );
 
