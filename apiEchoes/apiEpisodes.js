@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const _ = require("lodash");
+const wordsCount = require("words-count");
 
 const uid2 = require("uid2");
 const apiIsAuthenticated = require("./apiIsAuthenticated");
@@ -21,20 +22,10 @@ router.post("/api/create-episode", apiIsAuthenticated, async (req, res) => {
       _id: req.user._id,
     });
 
-    const wordCount = (str) => {
-      if (str) {
-        const tab = str
-          .trim()
-          .split(" ")
-          .filter((c) => c);
-        return tab.length;
-      } else {
-        return 0;
-      }
-    };
-
-    const optionsOrdered = await req.body.clientInfos.options;
-    const wordsNumber = wordCount(req.body.clientInfos.textToTransform);
+    const optionsOrdered = await req.body.clientInfos.options.filter(
+      (option) => option.status === true
+    );
+    const wordsNumber = wordsCount(req.body.clientInfos.textToTransform);
 
     // Calculer le total du texte
     let textPricing = 0;
@@ -160,18 +151,6 @@ router.post(
   async (req, res) => {
     const lastDate = Date.now();
 
-    const wordCount = (str) => {
-      if (str) {
-        const tab = str
-          .trim()
-          .split(" ")
-          .filter((c) => c);
-        return tab.length;
-      } else {
-        return 0;
-      }
-    };
-
     try {
       const userFound = await User.findOne({
         _id: req.user._id,
@@ -184,9 +163,11 @@ router.post(
           let optionsOrdered = [];
           let wordsNumber = 0;
           req.body.clientInfos.options &&
-            (optionsOrdered = await req.body.clientInfos.options);
+            (optionsOrdered = await req.body.clientInfos.options.filter(
+              (option) => option.status === true
+            ));
           req.body.clientInfos.textToTransform &&
-            (wordsNumber = wordCount(req.body.clientInfos.textToTransform));
+            (wordsNumber = wordsCount(req.body.clientInfos.textToTransform));
 
           // Calculer le total du texte
           let textPricing = 0;
@@ -205,9 +186,8 @@ router.post(
           // Calculer le total des options
           let optionsTotalAmount = 0;
           for (let i = 0; i < optionsOrdered.length; i++) {
-            // console.log(optionsOrdered[i]._id);
             const optionToFind = await Options.findById(optionsOrdered[i]._id);
-            // console.log("optionToFind ", optionToFind);
+
             if (optionsOrdered[i].status === true) {
               if (optionToFind.optionsType === "Prix par mot") {
                 optionsTotalAmount =

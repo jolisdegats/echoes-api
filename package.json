@@ -23,6 +23,7 @@
     "nodemailer": "^6.4.11",
     "require-all": "^3.0.0",
     "stripe": "^8.96.0",
-    "uid2": "0.0.3"
+    "uid2": "0.0.3",
+    "words-count": "^1.0.8"
   }
 }
