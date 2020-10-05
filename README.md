@@ -14,12 +14,12 @@ This demo of the project is currently hosted on Netlify (frontend) and Heroku (b
 <a href="https://echoes-jolisdegats.netlify.app/">Live Demo Client</a>
 </h3>
 <p>To access the demo, please use the following credentials or create a new account:</p>
-<p>admin : demo@mail.com // password : demo<p>
+<p><i>admin : demo@mail.com // password : demo</i><p>
 <h3>
 <a href="https://app.forestadmin.com/login">Live Demo Backoffice</a>
 </h3>
 <p>To access the backoffice demo, please use the following credentials:</p>
-<p>admin : developper.jolisdegats@gmail.com // password : demoJS29$<p>
+<p><i>admin : developper.jolisdegats@gmail.com // password : demoJS29$</i><p>
 <br/>
 <br/>
 <p align="center">
