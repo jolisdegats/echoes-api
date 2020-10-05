@@ -15,8 +15,6 @@ This demo of the project is currently hosted on Netlify (frontend) and Heroku (b
 </h3>
 <p>To access the demo, please use the following credentials or create a new account:</p>
 <p>admin : demo@mail.com // password : demo<p>
-<br/>
-<br/>
 <h3>
 <a href="https://app.forestadmin.com/login">Live Demo Backoffice</a>
 </h3>
