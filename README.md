@@ -15,7 +15,7 @@ This demo of the project is currently hosted on Netlify (frontend) and Heroku (b
 </h3>
 <p>To access the demo, please use the following credentials or create a new account:</p>
 <p><i>admin : demo@mail.com // password : demo</i><p>
-<p><i>Please note that Stripe is in test mode. If you'd like to test the demo with paiement, please use the following credit card credentials : 
+<p><i>Please note that Stripe is in test mode. If you'd like to test the demo with paiement, please use the following credit card credentials :  <br/>
 Card Number : 4242424242424242 / Date : 04/24 / Security Code : 242 / Postcode : 75000</i></p>
 <br/>
 <h3>
@@ -30,6 +30,7 @@ Card Number : 4242424242424242 / Date : 04/24 / Security Code : 242 / Postcode :
   <img src="https://res.cloudinary.com/dqp905mfv/image/upload/v1601623409/portfolio/echoes/GIF_22-09-2020_16-25-17_pmlik9.gif" alt ="Echoes Portfolio Project - Banner"  />
   </a>
   <br/>
+    <br/>
 <h2>Stack</h2>
 
 <p>Made with the following stack:<br/>
